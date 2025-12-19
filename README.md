@@ -10,7 +10,7 @@ This project uses ESP32 C3 development board to connect to bicycle CSC sensors v
 
 ## 硬件要求
 
-- **主控板**: ESP32 C3开发板（推荐ESP32-C3-DevKitC-02或类似型号）
+- **主控板**: ESP32 C3开发板（推荐ESP32-C3-SuperMini，体积小、功耗低，非常适合电池供电应用）
 - **显示屏**: OLED显示屏（SSD1306，128x64或128x32，I2C接口）
 - **电源**: 18650电池或聚合物锂电池（2000mAh+）
 - **传感器**: 支持BLE CSC协议的自行车传感器
@@ -74,7 +74,7 @@ ble_meter/
 
 1. 打开 `ble_meter.ino`
 2. 根据硬件配置修改 `config.h`
-3. 选择开发板：工具 → 开发板 → ESP32 Arduino → ESP32C3 Dev Module
+3. 选择开发板：工具 → 开发板 → ESP32 Arduino → ESP32C3 Dev Module（ESP32-C3-SuperMini使用相同配置）
 4. 选择端口
 5. 上传代码
 
