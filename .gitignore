@@ -1,0 +1,30 @@
+# Arduino相关
+*.hex
+*.elf
+*.bin
+*.eep
+*.lss
+*.sym
+*.su
+*.d
+*.o
+*.a
+*.la
+*.lo
+.DS_Store
+
+# 编译输出
+build/
+.vscode/
+.idea/
+
+# 日志文件
+*.log
+
+# 临时文件
+*.tmp
+*~
+
+# 系统文件
+Thumbs.db
+

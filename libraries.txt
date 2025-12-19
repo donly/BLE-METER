@@ -1,0 +1,40 @@
+# Arduino库依赖列表
+
+## 必需库
+
+### ESP32 BLE库
+- **库名**: ESP32 BLE Arduino (内置)
+- **说明**: ESP32 Arduino核心包内置，无需单独安装
+- **用途**: BLE扫描、连接、数据读取
+
+### OLED显示库
+- **库名**: Adafruit SSD1306
+- **安装**: Arduino IDE → 工具 → 管理库 → 搜索"Adafruit SSD1306"
+- **版本**: 2.5.7+
+- **用途**: OLED显示屏驱动
+
+### 图形库
+- **库名**: Adafruit GFX Library
+- **安装**: Arduino IDE → 工具 → 管理库 → 搜索"Adafruit GFX"
+- **版本**: 1.11.9+
+- **用途**: 图形绘制和字体支持
+
+## 可选库
+
+### 电池监控（如果使用）
+- **库名**: ESP32 AnalogRead
+- **说明**: ESP32内置ADC，可直接使用analogRead()
+
+## 安装方法
+
+1. 打开Arduino IDE
+2. 工具 → 管理库
+3. 搜索库名称
+4. 点击安装
+
+## 注意事项
+
+- ESP32 C3需要安装ESP32 Arduino核心包（见README.md）
+- 确保安装的库版本兼容ESP32 C3
+- 某些库可能需要手动安装，请参考各库的GitHub页面
+
