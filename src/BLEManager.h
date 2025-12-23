@@ -20,6 +20,7 @@ private:
   BLEClient* pClient;
   BLERemoteCharacteristic* pCSCMeasurement;
   BLERemoteCharacteristic* pCSCControlPoint;
+  BLERemoteCharacteristic* pBatteryLevel;  // 电池电量特征值
   
   bool deviceFound;
   BLEAdvertisedDevice* foundDevice;
@@ -59,6 +60,9 @@ public:
   bool isConnected();
   uint8_t* readCSCData();
   size_t getLastDataLength();
+  int8_t readBatteryLevel();  // 读取电池电量 (0-100, -1表示未获取)
+  String getDeviceName();     // 获取设备名称
+  int8_t getRSSI();           // 获取信号强度 (dBm)
   void disconnect();
   void clearLastDevice();  // 清除保存的设备地址
 };

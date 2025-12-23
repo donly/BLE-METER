@@ -88,8 +88,19 @@
 // 显示刷新间隔（毫秒）
 #define DISPLAY_REFRESH_INTERVAL 500
 
+// 显示主题选择
+// 0 = 数字显示仪表盘（默认）
+// 1 = 模拟仪表盘（指针式）
+// 2 = 数据统计表盘（列出所有数据）
+#define DISPLAY_THEME 0
+
 // 是否显示调试信息
 #define DEBUG_MODE true
+
+// 显示调试模式（启动后直接显示主界面，使用模拟数据，方便调试界面布局）
+// 设置为 true 时，程序启动后会直接显示主界面，不进行BLE连接
+// 设置为 false 时，正常运行程序逻辑
+#define DISPLAY_DEBUG_MODE false
 
 // 串口波特率
 #define SERIAL_BAUD 115200

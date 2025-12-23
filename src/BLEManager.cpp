@@ -19,6 +19,7 @@ BLEManager::BLEManager() {
   pClient = nullptr;
   pCSCMeasurement = nullptr;
   pCSCControlPoint = nullptr;
+  pBatteryLevel = nullptr;
   deviceFound = false;
   foundDevice = nullptr;
   instance = this;
@@ -213,6 +214,22 @@ bool BLEManager::connectToServer() {
     // 获取Control Point特征值（可选）
     pCSCControlPoint = pRemoteService->getCharacteristic(BLEUUID(CSC_CONTROL_POINT_UUID));
     
+    // 尝试获取电池服务（Battery Service, UUID: 0x180F）
+    BLERemoteService* pBatteryService = pClient->getService(BLEUUID((uint16_t)0x180F));
+    if (pBatteryService != nullptr) {
+      // 获取电池电量特征值 (Battery Level, UUID: 0x2A19)
+      pBatteryLevel = pBatteryService->getCharacteristic(BLEUUID((uint16_t)0x2A19));
+      if (pBatteryLevel != nullptr) {
+        Serial.println("找到电池服务，可以读取电量");
+      } else {
+        Serial.println("未找到电池电量特征值");
+        pBatteryLevel = nullptr;
+      }
+    } else {
+      Serial.println("设备不支持电池服务");
+      pBatteryLevel = nullptr;
+    }
+    
     // 连接成功，保存设备地址
     saveLastDeviceAddress(foundDevice->getAddress());
     
@@ -302,6 +319,53 @@ uint8_t* BLEManager::readCSCData() {
 
 size_t BLEManager::getLastDataLength() {
   return lastReadDataLength;
+}
+
+int8_t BLEManager::readBatteryLevel() {
+  if (!isConnected() || !pBatteryLevel) {
+    return -1;  // 未连接或设备不支持电池服务
+  }
+  
+  try {
+    String value = pBatteryLevel->readValue();
+    if (value.length() > 0) {
+      uint8_t level = (uint8_t)value[0];
+      if (level > 100) {
+        level = 100;  // 确保不超过100
+      }
+      return (int8_t)level;
+    }
+  } catch (...) {
+    Serial.println("读取电池电量失败");
+  }
+  
+  return -1;  // 读取失败
+}
+
+String BLEManager::getDeviceName() {
+  if (foundDevice && foundDevice->haveName()) {
+    return String(foundDevice->getName().c_str());
+  }
+  // 如果没有名称，返回设备地址
+  if (foundDevice) {
+    return String(foundDevice->getAddress().toString().c_str());
+  }
+  return String("");
+}
+
+int8_t BLEManager::getRSSI() {
+  if (!isConnected()) {
+    return 0;  // 未连接
+  }
+  
+  // 尝试从 foundDevice 获取 RSSI（扫描时的值）
+  if (foundDevice) {
+    return foundDevice->getRSSI();
+  }
+  
+  // 如果连接后需要实时 RSSI，可以通过 pClient 获取
+  // 但 ESP32 BLE 库可能不直接支持，所以返回扫描时的值
+  return 0;
 }
 
 void BLEManager::disconnect() {
