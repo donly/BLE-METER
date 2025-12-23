@@ -26,15 +26,12 @@ void PowerManager::enterDeepSleep(unsigned long seconds) {
   
   // 配置唤醒源
   if (seconds > 0) {
-    // 定时唤醒（如果明确指定了时间）
+    // 仅在明确指定时才配置定时唤醒
     esp_sleep_enable_timer_wakeup(seconds * 1000000ULL);
     Serial.printf("配置定时唤醒: %lu 秒后\n", seconds);
   } else {
-    // 使用定时唤醒（默认30秒后自动唤醒检查）
-    // 注意：深度睡眠时BOOT按钮无法唤醒，请使用RST按钮（硬件复位）唤醒
-    esp_sleep_enable_timer_wakeup(30 * 1000000ULL);
-    Serial.println("配置定时唤醒: 30秒后（自动检查）");
-    Serial.println("提示: 深度睡眠时请使用RST按钮唤醒设备");
+    // 不配置默认定时唤醒，需通过 RST/外部唤醒
+    Serial.println("未配置定时唤醒，需按 RST 或外部唤醒");
   }
   
   Serial.println("进入深度睡眠...");

@@ -6,7 +6,7 @@
 #ifndef POWER_MANAGER_H
 #define POWER_MANAGER_H
 
-#include <esp_sleep.h>
+#include <stdint.h>
 #include "config.h"
 
 class PowerManager {
@@ -24,4 +24,3 @@ public:
 };
 
 #endif // POWER_MANAGER_H
-

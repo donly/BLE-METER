@@ -7,6 +7,7 @@
 #define CSC_PARSER_H
 
 #include <stdint.h>
+#include <stddef.h>
 #include "config.h"
 
 // 前向声明
@@ -25,7 +26,7 @@ private:
 public:
   CSCParser();
   
-  void parseData(uint8_t* data, SensorData& sensorData);
+  void parseData(uint8_t* data, size_t length, SensorData& sensorData);
   void reset();
 };
 

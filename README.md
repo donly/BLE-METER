@@ -43,7 +43,8 @@ ble_meter/
 │   ├── CSCParser.h          # CSC数据解析
 │   └── CSCParser.cpp
 └── docs/                    # 文档目录
-    └── hardware_setup.md    # 硬件连接说明
+    ├── hardware_setup.md    # 硬件连接说明
+    └── ble_csc_protocol.md  # BLE CSC协议格式文档
 ```
 
 ## 快速开始
@@ -89,7 +90,12 @@ ble_meter/
 ## 功耗优化
 
 - 静止时自动进入深度睡眠（~5μA）
-- 运动检测唤醒
+- 静止判断条件：
+  - 速度 < 0.5 km/h
+  - 静止时间 > 60秒（可在config.h中配置）
+- 唤醒方式：
+  - 定时唤醒（默认30秒后自动唤醒检查）
+  - GPIO唤醒（可配置，如BOOT按钮）
 - CPU频率动态调整
 - BLE连接优化
 
